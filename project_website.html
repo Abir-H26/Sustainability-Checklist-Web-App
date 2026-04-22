@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sustainability Checklist · ClimateAction.tech Hackathon</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --green-deep:   #0d3b2e;
+      --green-mid:    #1a5c44;
+      --green-bright: #2ecc87;
+      --green-pale:   #d4f5e5;
+      --cream:        #f7f3ec;
+      --ink:          #0d1a14;
+      --muted:        #5a7a6c;
+      --white:        #ffffff;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: var(--green-deep);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 5rem 8vw;
+      gap: 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    @media (max-width: 860px) {
+      .hero { grid-template-columns: 1fr; text-align: center; gap: 3.5rem; padding: 5rem 6vw; }
+      .hero-right { display: flex; flex-direction: column; align-items: center; }
+      .badge, .hero-links { margin-inline: auto; }
+    }
+
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(46,204,135,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(46,204,135,.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 70% at 100% 50%, rgba(46,204,135,.13) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-left { position: relative; z-index: 1; }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: rgba(46,204,135,.12);
+      border: 1px solid rgba(46,204,135,.28);
+      color: var(--green-bright);
+      font-family: 'DM Mono', monospace;
+      font-size: .7rem; letter-spacing: .13em; text-transform: uppercase;
+      padding: .35rem .9rem; border-radius: 2px;
+      margin-bottom: 1.8rem; width: fit-content;
+      animation: fadeUp .5s ease both;
+    }
+    .badge::before { content: '◆'; font-size: .5rem; }
+
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.6rem, 6vw, 5.2rem);
+      color: var(--white); line-height: 1.05;
+      animation: fadeUp .5s .08s ease both;
+    }
+    h1 em { font-style: italic; color: var(--green-bright); }
+
+    .hero-sub {
+      margin-top: 1.4rem;
+      font-size: clamp(.95rem, 1.4vw, 1.15rem);
+      color: rgba(255,255,255,.55);
+      max-width: 480px;
+      animation: fadeUp .5s .16s ease both;
+    }
+
+    .hero-links {
+      margin-top: 2.2rem;
+      display: flex; gap: .8rem; flex-wrap: wrap;
+      animation: fadeUp .5s .24s ease both;
+    }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .7rem 1.4rem; border-radius: 3px;
+      font-size: .85rem; font-weight: 500; text-decoration: none;
+      transition: transform .2s, box-shadow .2s; letter-spacing: .02em;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-ghost {
+      background: transparent; color: rgba(255,255,255,.6);
+      border: 1px solid rgba(255,255,255,.18);
+    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,.4); color: var(--white); }
+    .btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+    /* ── QR CARD ── */
+    .hero-right { position: relative; z-index: 1; }
+
+    .qr-card {
+      background: var(--white);
+      border-radius: 8px;
+      padding: 2.8rem 2.4rem 2.2rem;
+      display: flex; flex-direction: column; align-items: center;
+      box-shadow: 0 32px 80px rgba(0,0,0,.35), 0 0 0 1px rgba(255,255,255,.06);
+      max-width: 340px;
+      animation: fadeUp .5s .2s ease both;
+    }
+    @media (max-width: 860px) { .qr-card { max-width: 300px; } }
+
+    .qr-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: .68rem; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 1.6rem;
+      display: flex; align-items: center; gap: .6rem; width: 100%;
+    }
+    .qr-eyebrow::before, .qr-eyebrow::after {
+      content: ''; flex: 1; height: 1px; background: rgba(0,0,0,.1);
+    }
+
+
+
+    .qr-pulse {
+      margin-top: 1.5rem;
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem;
+      color: var(--ink);
+      text-align: center;
+    }
+
+    .qr-url {
+      margin-top: .5rem;
+      font-family: 'DM Mono', monospace;
+      font-size: .68rem; color: var(--muted);
+      text-align: center;
+    }
+
+    .qr-btn {
+      margin-top: 1.6rem;
+      background: var(--green-deep);
+      color: var(--white);
+      font-size: .88rem; font-weight: 500;
+      padding: .9rem 2rem; border-radius: 3px;
+      text-align: center; width: 100%;
+      text-decoration: none;
+      display: flex; align-items: center; justify-content: center; gap: .5rem;
+      transition: background .2s, transform .2s;
+    }
+    .qr-btn:hover { background: var(--green-mid); transform: translateY(-1px); }
+
+    .qr-hint {
+      margin-top: .8rem;
+      font-size: .73rem; color: #b0c4bc;
+      text-align: center;
+    }
+
+    /* ── SECTIONS ── */
+    section.content { padding: 5.5rem 8vw; }
+    .section-label {
+      font-family: 'DM Mono', monospace; font-size: .68rem;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: var(--green-mid); margin-bottom: .8rem;
+    }
+    h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+      color: var(--ink); line-height: 1.15; margin-bottom: 2.2rem;
+    }
+
+    /* CONTEXT */
+    .context-section { background: var(--white); }
+    .context-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5rem; align-items: start;
+    }
+    @media (max-width: 800px) { .context-inner { grid-template-columns: 1fr; gap: 3rem; } }
+
+    .context-text p { color: var(--muted); font-size: 1rem; margin-bottom: 1.1rem; }
+    .context-text p strong { color: var(--ink); font-weight: 600; }
+
+    .stack-list { display: flex; flex-wrap: wrap; gap: .55rem; margin-top: 1.8rem; }
+    .stack-tag {
+      background: var(--green-pale); color: var(--green-mid);
+      font-family: 'DM Mono', monospace; font-size: .72rem;
+      padding: .38rem .85rem; border-radius: 2px; letter-spacing: .05em;
+    }
+
+    .stat-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 500px) { .stat-cards { grid-template-columns: 1fr; } }
+
+    .stat-card {
+      background: var(--green-deep); color: var(--white);
+      padding: 1.6rem 1.4rem; border-radius: 4px; position: relative; overflow: hidden;
+    }
+    .stat-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 2px; background: var(--green-bright);
+    }
+    .stat-num { font-family: 'DM Serif Display', serif; font-size: 2.2rem; color: var(--green-bright); line-height: 1; margin-bottom: .35rem; }
+    .stat-desc { font-size: .82rem; color: rgba(255,255,255,.5); line-height: 1.4; }
+
+    /* HIGHLIGHTS */
+    .highlights-section { background: var(--cream); }
+    .highlights-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 1.4rem; }
+    .highlight-card {
+      background: var(--white); border: 1px solid rgba(0,0,0,.06);
+      padding: 1.8rem; border-radius: 4px;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .highlight-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,.08); }
+    .highlight-icon {
+      width: 40px; height: 40px; background: var(--green-pale);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.1rem; font-size: 1.1rem;
+    }
+    .highlight-card h3 { font-weight: 600; font-size: .95rem; color: var(--ink); margin-bottom: .5rem; }
+    .highlight-card p { font-size: .87rem; color: var(--muted); line-height: 1.6; }
+
+    /* IMPACT */
+    .impact-section { background: var(--green-deep); color: var(--white); position: relative; overflow: hidden; }
+    .impact-section::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 70% at 80% 50%, rgba(46,204,135,.12) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .impact-section .section-label { color: var(--green-bright); }
+    .impact-section h2 { color: var(--white); }
+    .impact-quote {
+      max-width: 680px;
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.3rem, 2.5vw, 1.85rem);
+      font-style: italic; color: rgba(255,255,255,.85); line-height: 1.45;
+      border-left: 3px solid var(--green-bright); padding-left: 1.8rem; margin: 2.2rem 0;
+    }
+    .impact-detail { color: rgba(255,255,255,.5); font-size: .98rem; max-width: 560px; line-height: 1.7; }
+    .impact-detail strong { color: var(--green-bright); font-weight: 500; }
+
+    /* FOOTER */
+    footer {
+      background: var(--ink); color: rgba(255,255,255,.3);
+      padding: 2.5rem 8vw;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1.2rem;
+      font-family: 'DM Mono', monospace; font-size: .72rem; letter-spacing: .05em;
+    }
+    footer a { color: rgba(255,255,255,.45); text-decoration: none; transition: color .2s; }
+    footer a:hover { color: var(--green-bright); }
+    .footer-links { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+
+  <div class="hero-left">
+    <div class="badge">ClimateAction.tech · Zurich · May 2025</div>
+    <h1>Sustainability<br><em>Checklist</em><br>Web App</h1>
+    <p class="hero-sub">
+      A Gemini-powered tool generating tailored sustainability recommendations
+      across every phase of an IT project lifecycle.
+    </p>
+    <div class="hero-links">
+      <a class="btn btn-ghost" href="https://github.com/Abir-H26/Sustainability-Checklist-Web-App/tree/main" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+      <a class="btn btn-ghost" href="https://drive.google.com/drive/folders/1NqL03T2IuOyne4Vf3B6HDwtZbrknl_sT?usp=sharing" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+        Watch Demo
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="qr-card">
+      <div class="qr-eyebrow">Scan to try it</div>
+      <img src="qrcode.png" alt="QR code to try the app" width="200" height="200" style="border-radius:4px;display:block;"/>
+      <p class="qr-pulse">Try the prototype →</p>
+      <p class="qr-url">climateaction.bb.dribdat.cc</p>
+      <a class="qr-btn" href="https://climateaction.bb.dribdat.cc/" target="_blank" rel="noopener">
+        📱 &nbsp;Open on mobile
+      </a>
+      <p class="qr-hint">Point your phone camera at the QR code above</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTEXT -->
+<section class="content context-section reveal">
+  <div class="context-inner">
+    <div class="context-text">
+      <p class="section-label">// Context</p>
+      <h2>Built under pressure,<br>in Zurich.</h2>
+      <p>Developed at the <strong>ClimateAction.tech Hackathon</strong> — a competitive event bringing together developers, designers, and sustainability professionals to prototype solutions addressing real environmental challenges.</p>
+      <p>Our team identified a gap: IT projects lack structured guidance on <strong>environmental impact</strong>. We built a GenAI-powered checklist that meets teams wherever they are in their project lifecycle — from initial design all the way through maintenance.</p>
+      <div class="stack-list">
+        <span class="stack-tag">Python</span>
+        <span class="stack-tag">Gemini API</span>
+        <span class="stack-tag">Generative AI</span>
+        <span class="stack-tag">Full-Stack Web Dev</span>
+        <span class="stack-tag">UI / UX Design</span>
+      </div>
+    </div>
+    <div class="stat-cards">
+      <div class="stat-card">
+        <div class="stat-num">4</div>
+        <div class="stat-desc">IT project phases: design, development, deployment & maintenance</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">AI</div>
+        <div class="stat-desc">Gemini-powered recommendations tailored to each project context</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">MVP</div>
+        <div class="stat-desc">Working prototype delivered within the hackathon timeframe</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">✦</div>
+        <div class="stat-desc">Attracted investor interest from industry mentors & companies</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HIGHLIGHTS -->
+<section class="content highlights-section reveal">
+  <p class="section-label">// What we built & did</p>
+  <h2>Key highlights</h2>
+  <div class="highlights-grid">
+    <div class="highlight-card">
+      <div class="highlight-icon">🤖</div>
+      <h3>Gemini-Powered Recommendations</h3>
+      <p>Uses the Gemini API to generate sustainability guidance tailored to the specific phase and context of any IT project.</p>
+    </div>
+    <div class="highlight-card">
+      <div class="highlight-icon">🎤</div>
+      <h3>Live Pitch to Industry Audience</h3>
+      <p>Presented to the full hackathon audience — communicating business value and technical approach to industry professionals and mentors.</p>
+    </div>
+    <div class="highlight-card">
+      <div class="highlight-icon">🤝</div>
+      <h3>Multidisciplinary Collaboration</h3>
+      <p>Coordinated between technical and non-technical contributors to deliver a working MVP under time pressure.</p>
+    </div>
+    <div class="highlight-card">
+      <div class="highlight-icon">💡</div>
+      <h3>Business Requirements Analysis</h3>
+      <p>Combined user-facing UI/UX design with structured business requirements analysis to address real stakeholder needs.</p>
+    </div>
+    <div class="highlight-card">
+      <div class="highlight-icon">🌱</div>
+      <h3>End-to-End Lifecycle Coverage</h3>
+      <p>Spans design, development, deployment, and maintenance phases — making sustainability a continuous consideration.</p>
+    </div>
+    <div class="highlight-card">
+      <div class="highlight-icon">🚀</div>
+      <h3>Path to Market</h3>
+      <p>Prototype attracted investor interest. Now independently upskilling in full-stack development to bring the product to market.</p>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT -->
+<section class="content impact-section reveal">
+  <p class="section-label">// Impact</p>
+  <h2>Beyond the hackathon.</h2>
+  <blockquote class="impact-quote">
+    "The prototype attracted investor interest from industry mentors and industrial companies."
+  </blockquote>
+  <p class="impact-detail">
+    What started as a weekend prototype has become a real product opportunity.
+    Positive reception from <strong>industry professionals and investors</strong>
+    confirmed genuine market demand for accessible, AI-driven sustainability tooling for software teams.
+  </p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2025 Sustainability Checklist · ClimateAction.tech Hackathon, Zurich</span>
+  <div class="footer-links">
+    <a href="https://github.com/Abir-H26/Sustainability-Checklist-Web-App/tree/main" target="_blank" rel="noopener">GitHub →</a>
+    <a href="https://climateaction.bb.dribdat.cc/" target="_blank" rel="noopener">Project Page →</a>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
