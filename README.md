@@ -25,12 +25,6 @@ A standalone project page is included in this repo.
 2. Place both files in the same folder
 3. Double-click `index.html` — it opens in your browser, no server needed
 
-**To deploy it on GitHub Pages:**
-1. Go to **Settings → Pages**
-2. Set source to branch `main`, folder `/ (root)`
-3. Click **Save** — live in ~1 minute at:
-   `https://abir-h26.github.io/Sustainability-Checklist-Web-App/`
-
 ---
 
 ## Stack
@@ -42,7 +36,7 @@ A standalone project page is included in this repo.
 ## Repo Structure
 
 ```
-├── index.html        # Standalone project website
+├── project_website.html        # Standalone project website
 ├── qrcode.png        # QR code linking to the live app
 └── README.md
 ```
